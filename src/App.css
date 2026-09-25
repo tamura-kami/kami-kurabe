@@ -2,8 +2,6 @@
 .site-header { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 700; text-decoration: none; font-size: 17px; letter-spacing: .02em; }
 .brand-mark { width: 29px; height: 29px; display: grid; place-items: center; color: white; background: var(--blue); border-radius: 8px; font-size: 16px; }
-.github-link { font-size: 13px; font-weight: 600; color: #505c6d; text-decoration: none; }
-.github-link span { color: var(--blue); margin-left: 3px; }
 main { flex: 1; }
 .workspace { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, .9fr); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: white; box-shadow: 0 10px 35px #23395b0b; }
 .comparison-panel { padding: 23px 25px 17px; min-width: 0; }

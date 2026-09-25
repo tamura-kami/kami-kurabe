@@ -42,7 +42,6 @@ function App() {
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#top" aria-label="紙くらべ ホーム"><span className="brand-mark">紙</span><span>紙くらべ</span></a>
-        <a className="github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </header>
 
       <main id="top">
