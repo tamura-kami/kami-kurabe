@@ -3,6 +3,7 @@ import './App.css'
 
 type Paper = { name: string; width: number; height: number; group: string }
 type ComparePosition = 'center' | 'top-left'
+type PaperOrientation = 'default' | 'long-edge-horizontal'
 
 const papers: Paper[] = [
   { name: 'A2', width: 420, height: 594, group: 'A判' },
@@ -32,6 +33,7 @@ const scale = 0.59
 function App() {
   const [selected, setSelected] = useState<string[]>(['A4', 'はがき'])
   const [comparePosition, setComparePosition] = useState<ComparePosition>('top-left')
+  const [orientation, setOrientation] = useState<PaperOrientation>('default')
   function togglePaper(name: string) {
     setSelected((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name])
   }
@@ -44,26 +46,34 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="intro">
-          <h1>紙サイズを比べる</h1>
-        </section>
-
         <section className="workspace" aria-label="紙サイズ比較">
           <div className="comparison-panel">
-            <div className="panel-heading"><div><h2>サイズを見比べる</h2></div><span className="unit-note">すべて mm ・ 同じ縮尺</span></div>
-            <div className="compare-controls" aria-label="比較位置">
-              <span>重ね方</span>
-              <div className="position-switch">
-                <button type="button" aria-pressed={comparePosition === 'center'} className={comparePosition === 'center' ? 'selected' : ''} onClick={() => setComparePosition('center')}>中央で比較</button>
-                <button type="button" aria-pressed={comparePosition === 'top-left'} className={comparePosition === 'top-left' ? 'selected' : ''} onClick={() => setComparePosition('top-left')}>左上を基準</button>
+            <div className="panel-heading"><div><h2>紙サイズを比べる</h2></div><span className="unit-note">すべて mm ・ 同じ縮尺</span></div>
+            <div className="compare-controls" aria-label="比較設定">
+              <div className="compare-control-group">
+                <span>重ね方</span>
+                <div className="position-switch">
+                  <button type="button" aria-pressed={comparePosition === 'center'} className={comparePosition === 'center' ? 'selected' : ''} onClick={() => setComparePosition('center')}>中央で比較</button>
+                  <button type="button" aria-pressed={comparePosition === 'top-left'} className={comparePosition === 'top-left' ? 'selected' : ''} onClick={() => setComparePosition('top-left')}>左上を基準</button>
+                </div>
+              </div>
+              <div className="compare-control-group">
+                <span>紙の向き</span>
+                <div className="position-switch">
+                  <button type="button" aria-pressed={orientation === 'default'} className={orientation === 'default' ? 'selected' : ''} onClick={() => setOrientation('default')}>そのまま</button>
+                  <button type="button" aria-pressed={orientation === 'long-edge-horizontal'} className={orientation === 'long-edge-horizontal' ? 'selected' : ''} onClick={() => setOrientation('long-edge-horizontal')}>長辺を横</button>
+                </div>
               </div>
             </div>
             <div className={`paper-stage ${comparePosition === 'top-left' ? 'align-top-left' : ''}`} aria-label={`${comparePosition === 'center' ? '中央' : '左上'}を基準に選択した紙の形を重ねて表示`}>
               <div className="stage-grid" />
               {papers.map((paper, index) => {
                 const active = selected.includes(paper.name)
+                const isRotated = orientation === 'long-edge-horizontal' && paper.height > paper.width
+                const displayWidth = isRotated ? paper.height : paper.width
+                const displayHeight = isRotated ? paper.width : paper.height
                 return <div key={paper.name} className={`paper-shape${active ? ' is-active' : ''}`} style={{
-                  width: `${paper.width * scale}px`, height: `${paper.height * scale}px`,
+                  width: `${displayWidth * scale}px`, height: `${displayHeight * scale}px`,
                   left: comparePosition === 'center' ? '50%' : '12px',
                   top: comparePosition === 'center' ? '50%' : '12px',
                   transform: comparePosition === 'center' ? 'translate(-50%, -50%)' : 'none',
@@ -71,7 +81,7 @@ function App() {
                   backgroundColor: `${colors[index % colors.length]}${active ? '22' : '08'}`,
                   zIndex: active ? index + 2 : 1,
                 }} aria-hidden="true">
-                  {active && <span className="paper-label" style={{ borderLeftColor: colors[index % colors.length] }}><strong>{paper.name}</strong><small>{paper.width} × {paper.height} mm</small></span>}
+                  {active && <span className="paper-label" style={{ borderLeftColor: colors[index % colors.length] }}><strong>{paper.name}</strong><small>{displayWidth} × {displayHeight} mm</small></span>}
                 </div>
               })}
               {selected.length === 0 && <p className="stage-hint">下から紙を選ぶと比較できます</p>}
