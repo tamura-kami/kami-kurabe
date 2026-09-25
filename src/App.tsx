@@ -31,7 +31,7 @@ const scale = 0.59
 
 function App() {
   const [selected, setSelected] = useState<string[]>(['A4', 'はがき'])
-  const [comparePosition, setComparePosition] = useState<ComparePosition>('center')
+  const [comparePosition, setComparePosition] = useState<ComparePosition>('top-left')
   function togglePaper(name: string) {
     setSelected((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name])
   }
@@ -70,7 +70,9 @@ function App() {
                   borderColor: colors[index % colors.length],
                   backgroundColor: `${colors[index % colors.length]}${active ? '22' : '08'}`,
                   zIndex: active ? index + 2 : 1,
-                }} aria-hidden="true" />
+                }} aria-hidden="true">
+                  {active && <span className="paper-label" style={{ borderLeftColor: colors[index % colors.length] }}><strong>{paper.name}</strong><small>{paper.width} × {paper.height} mm</small></span>}
+                </div>
               })}
               {selected.length === 0 && <p className="stage-hint">下から紙を選ぶと比較できます</p>}
               <div className="scale-indicator"><span />100 mm</div>
@@ -80,7 +82,7 @@ function App() {
 
           <aside className="selection-panel">
             <div className="panel-heading selection-heading"><div><h2>比較するサイズ</h2></div><span className="selected-count">{selected.length}<small> 件</small></span></div>
-            <div className="selection-tools"><span>{selected.length === 0 ? 'すべて表示中' : `${selected.length}種類を選択中`}</span><button onClick={() => setSelected(selected.length === papers.length ? [] : papers.map((paper) => paper.name))}>{selected.length === papers.length ? '選択を解除' : 'すべて選択'}</button></div>
+            <div className="selection-tools"><span>{selected.length === 0 ? '選択なし' : `${selected.length}種類を選択中`}</span><button type="button" onClick={() => setSelected([])}>すべて解除</button></div>
             <div className="paper-options">
               {['A判', 'B判', 'その他', 'F号'].map((group) => <div className="option-group" key={group}><h3>{group}</h3><div className="option-list">
                 {papers.filter((paper) => paper.group === group).map((paper) => {
