@@ -17,6 +17,7 @@ const papers: Paper[] = [
   { name: "B5", width: 182, height: 257, group: "B判" },
   { name: "B6", width: 128, height: 182, group: "B判" },
   { name: "はがき", width: 100, height: 148, group: "その他" },
+  { name: "SM", width: 227, height: 158, group: "その他" },
   { name: "F0号", width: 180, height: 140, group: "F号" },
   { name: "F1号", width: 220, height: 160, group: "F号" },
   { name: "F2号", width: 240, height: 190, group: "F号" },
@@ -129,7 +130,11 @@ function App() {
             >
               <div className="stage-grid" />
               {papers.map((paper, index) => {
-                const active = selected.includes(paper.name);
+                const selectionIndex = selected.indexOf(paper.name);
+                const active = selectionIndex !== -1;
+                const color = active
+                  ? colors[selectionIndex % colors.length]
+                  : "#94a3b8";
                 const isRotated =
                   orientation === "long-edge-horizontal" &&
                   paper.height > paper.width;
@@ -148,8 +153,8 @@ function App() {
                         comparePosition === "center"
                           ? "translate(-50%, -50%)"
                           : "none",
-                      borderColor: colors[index % colors.length],
-                      backgroundColor: `${colors[index % colors.length]}${
+                      borderColor: color,
+                      backgroundColor: `${color}${
                         active ? "22" : "08"
                       }`,
                       zIndex: active ? index + 2 : 1,
@@ -160,7 +165,7 @@ function App() {
                       <span
                         className="paper-label"
                         style={{
-                          borderLeftColor: colors[index % colors.length],
+                          borderLeftColor: color,
                         }}
                       >
                         <strong>{paper.name}</strong>
@@ -215,9 +220,11 @@ function App() {
                     {papers
                       .filter((paper) => paper.group === group)
                       .map((paper) => {
-                        const checked = selected.includes(paper.name);
-                        const color =
-                          colors[papers.indexOf(paper) % colors.length];
+                        const selectionIndex = selected.indexOf(paper.name);
+                        const checked = selectionIndex !== -1;
+                        const color = checked
+                          ? colors[selectionIndex % colors.length]
+                          : "#94a3b8";
                         return (
                           <label
                             className={`paper-option${
