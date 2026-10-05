@@ -1,5 +1,7 @@
 .site-shell { max-width: 1180px; min-height: 100vh; margin: 0 auto; padding: 0 48px; box-sizing: border-box; display: flex; flex-direction: column; }
-.site-header { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.site-header { min-height: 96px; padding: 14px 0; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand-block { min-width: 0; }
+.brand-subtitle { margin: 7px 0 0; color: #687487; font-size: 12px; line-height: 1.6; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 700; text-decoration: none; font-size: 17px; letter-spacing: .02em; }
 .brand-mark { width: 29px; height: 29px; display: grid; place-items: center; color: white; background: var(--blue); border-radius: 8px; font-size: 16px; }
 main { flex: 1; }
@@ -7,7 +9,7 @@ main { flex: 1; }
 .comparison-panel { padding: 23px 25px 17px; min-width: 0; }
 .selection-panel { border-left: 1px solid var(--line); padding: 23px 22px 16px; min-width: 0; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.panel-heading h2 { color: var(--ink); font-size: 18px; font-weight: 700; margin: 3px 0 0; letter-spacing: -.02em; }
+.panel-heading h1, .panel-heading h2 { color: var(--ink); font-size: 18px; font-weight: 700; margin: 3px 0 0; letter-spacing: -.02em; }
 .unit-note { color: #8a95a5; font-size: 12px; }
 .compare-controls { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; color: #778496; font-size: 12px; }
 .compare-control-group { display: flex; align-items: center; gap: 9px; }
@@ -62,7 +64,7 @@ main { flex: 1; }
 }
 @media (max-width: 500px) {
   .site-shell { padding: 0 14px; }
-  .site-header { height: 62px; }
+  .site-header { min-height: 88px; }
   .comparison-panel, .selection-panel { padding: 18px 14px 14px; }
   .paper-stage { height: 102vw; max-height: 440px; min-height: 320px; }
   .compare-controls { gap: 8px; }

@@ -53,10 +53,15 @@ function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
+        <div className="brand-block">
         <a className="brand" href="#top" aria-label="紙くらべ ホーム">
           <span className="brand-mark">紙</span>
           <span>紙くらべ</span>
         </a>
+          <p className="brand-subtitle">
+            用紙サイズを重ねて、視覚的に比較できます。
+          </p>
+        </div>
       </header>
 
       <main id="top">
@@ -64,7 +69,7 @@ function App() {
           <div className="comparison-panel">
             <div className="panel-heading">
               <div>
-                <h2>紙サイズを比べる</h2>
+                <h1>紙サイズを比べる</h1>
               </div>
               <span className="unit-note">すべて mm ・ 同じ縮尺</span>
             </div>
